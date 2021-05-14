@@ -70,20 +70,20 @@ describe 'Products filtering', :js do
     expect(page).to have_selected_filter_with(value: 'M')
     expect(page).to have_selected_filter_with(value: 'S')
 
-    click_on_filter 'Manufacturer', value: 'wilson'
+    click_on_filter 'Manufacturer', value: 'Wilson'
     expect(page).not_to have_content 'First shirt'
     expect(page).to have_content 'Second shirt'
     expect(page).to have_selected_filter_with(value: 'M')
     expect(page).to have_selected_filter_with(value: 'S')
     expect(page).to have_selected_filter_with(value: 'WILSON')
 
-    click_on_filter 'Brand', value: 'zeta'
-    expect(page).to have_content 'First shirt'
+    click_on_filter 'Brand', value: 'Alpha'
+    expect(page).not_to have_content 'First shirt'
     expect(page).to have_content 'Second shirt'
     expect(page).to have_selected_filter_with(value: 'M')
     expect(page).to have_selected_filter_with(value: 'S')
     expect(page).to have_selected_filter_with(value: 'WILSON')
-    expect(page).to have_selected_filter_with(value: 'ZETA')
+    expect(page).to have_selected_filter_with(value: 'ALPHA')
 
     expect(current_path).to eq spree.products_path
   end
