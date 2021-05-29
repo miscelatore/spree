@@ -57,6 +57,7 @@ module Spree
 
     def apply_admin_permissions(user)
       can :manage, :all
+      cannot [:create, :destroy], ::Spree::Store
     end
 
     def apply_user_permissions(user)
