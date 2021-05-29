@@ -743,6 +743,7 @@ en:
     currency: Currency
     currencies: Currencies
     currency_settings: Currency Settings
+    currency_settings_warning: This can be overriden by individual Store settings
     current: Current
     current_promotion_usage: ! 'current usage: %{count}'
     customer: Customer
