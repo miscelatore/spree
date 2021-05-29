@@ -38,30 +38,67 @@ fi
 
 cd ./sandbox
 
+if [ "$SPREE_HEADLESS" != "" ]; then
+  bundle config local.spree_core /Users/mixer/RoR/Rails6/spree
+  bundle config local.spree_api /Users/mixer/RoR/Rails6/spree
+  bundle config local.spree_backend /Users/mixer/RoR/Rails6/spree
+  bundle config local.spree_sample /Users/mixer/RoR/Rails6/spree
+  bundle config local.spree_cmd /Users/mixer/RoR/Rails6/spree
+else
+  bundle config local.spree /Users/mixer/RoR/Rails6/spree
+fi
+
+bundle config local.spree_i18n /Users/mixer/RoR/Rails6/spree_i18n
+bundle config local.spree_static_content /Users/mixer/RoR/Rails6/spree_static_content
+bundle config local.spree_related_products /Users/mixer/RoR/Rails6/spree_related_products
+# bundle config local.spree_multi_domain /Users/mixer/RoR/Rails6/spree-multi-domain
+# bundle config local.spree_mail_settings /Users/mixer/RoR/Rails6/spree_mail_settings
+
 if [ "$SPREE_AUTH_DEVISE_PATH" != "" ]; then
   SPREE_AUTH_DEVISE_GEM="gem 'spree_auth_devise', path: '$SPREE_AUTH_DEVISE_PATH'"
 else
-  SPREE_AUTH_DEVISE_GEM="gem 'spree_auth_devise', github: 'spree/spree_auth_devise', branch: 'master'"
+  bundle config local.spree_auth_devise /Users/mixer/RoR/Rails6/spree_auth_devise
+  SPREE_AUTH_DEVISE_GEM="gem 'spree_auth_devise', git: 'spree_auth_devise/spree_auth_devise', branch: 'spree_auth_devise_nx'"
 fi
 
 if [ "$SPREE_GATEWAY_PATH" != "" ]; then
   SPREE_GATEWAY_GEM="gem 'spree_gateway', path: '$SPREE_GATEWAY_PATH'"
 else
-  SPREE_GATEWAY_GEM="gem 'spree_gateway', github: 'spree/spree_gateway', branch: 'master'"
+  bundle config local.spree_gateway /Users/mixer/RoR/Rails6/spree_gateway
+  SPREE_GATEWAY_GEM="gem 'spree_gateway', git: 'spree_gateway/spree_gateway', branch: 'spree_gateway_nx'"
 fi
+
+# if [ "$SPREE_BRAINTREE_VZERO_PATH" != "" ]; then
+#   SPREE_BRAINTREE_VZERO="gem 'spree_braintree_vzero', path: '$SPREE_BRAINTREE_VZERO_PATH'"
+# else
+#   bundle config local.spree_braintree_vzero /Users/mixer/RoR/Rails6/spree_braintree_vzero
+#   # TODO: search method to identify OStype for conditionig bundle command below
+#   bundle config --global build.libxml-ruby --with-xml2-config="$(brew --prefix libxml2)/bin/xml2-config"
+#   SPREE_BRAINTREE_VZERO="gem 'spree_braintree_vzero', git: 'spree_braintree_vzero/spree_braintree_vzero', branch: 'spree_braintree_vzero_nx'"
+# fi
+
+if [ "$BETTER_SPREE_PAYPAL_EXPRESS_PATH" != "" ]; then
+  BETTER_SPREE_PAYPAL_EXPRESS="gem 'spree_paypal_express', path: '$BETTER_SPREE_PAYPAL_EXPRESS_PATH'"
+else
+  bundle config local.spree_paypal_express /Users/mixer/RoR/Rails6/better_spree_paypal_express
+  BETTER_SPREE_PAYPAL_EXPRESS="gem 'spree_paypal_express', git: 'better_spree_paypal_express/better_spree_paypal_express', branch: 'better_spree_paypal_express_nx'"
+fi
+
 
 if [ "$SPREE_HEADLESS" != "" ]; then
 cat <<RUBY >> Gemfile
-gem 'spree_core', path: '..'
-gem 'spree_api', path: '..'
-gem 'spree_backend', path: '..'
-gem 'spree_sample', path: '..'
-gem 'spree_cmd', path: '..'
+gem 'spree_core', git: 'spree_core/spree_core', branch: 'spree_core_nx'
+gem 'spree_api', git: 'spree_api/spree_api', branch: 'spree_api_nx'
+gem 'spree_backend', git: 'spree_backend/spree_backend', branch: 'spree_backend_nx'
+gem 'spree_sample', git: 'spree_sample/spree_sample', branch: 'spree_sample_nx'
+gem 'spree_cmd', git: 'spree_cmd/spree_cmd', branch: 'spree_cmd_nx'
 
 $SPREE_AUTH_DEVISE_GEM
 $SPREE_GATEWAY_GEM
+# $SPREE_BRAINTREE_VZERO
+$BETTER_SPREE_PAYPAL_EXPRESS
 
-gem 'spree_i18n', github: 'spree-contrib/spree_i18n', branch: 'master'
+gem 'spree_i18n', git: 'spree_i18n/spree_i18n', branch: 'spree_i18n_nx'
 
 group :test, :development do
   gem 'bullet'
@@ -73,13 +110,16 @@ gem 'rack-cache'
 RUBY
 else
 cat <<RUBY >> Gemfile
-gem 'spree', path: '..'
+gem 'spree', git: 'spree/spree', branch: 'spree_nx'
 $SPREE_AUTH_DEVISE_GEM
 $SPREE_GATEWAY_GEM
-gem 'spree_i18n', github: 'spree-contrib/spree_i18n', branch: 'master'
-gem 'spree_static_content', github: 'spree-contrib/spree_static_content', branch: 'master'
-gem 'spree_related_products', github: 'spree-contrib/spree_related_products', branch: 'master'
-gem 'spree_multi_domain', github: 'spree-contrib/spree-multi-domain', branch: 'master'
+# $SPREE_BRAINTREE_VZERO
+$BETTER_SPREE_PAYPAL_EXPRESS
+gem 'spree_i18n', git: 'spree_i18n/spree_i18n', branch: 'spree_i18n_nx'
+gem 'spree_static_content', git: 'spree_static_content/spree_static_content', branch: 'spree_static_content_nx'
+gem 'spree_related_products', git: 'spree_related_products/spree_related_products', branch: 'spree_related_products_nx'
+# gem 'spree_multi_domain', git: 'spree-multi-domain/spree-multi-domain', branch: 'spree_multi_domain_nx'
+# gem 'spree_mail_settings', git: 'spree_mail_settings/spree_mail_settings', branch: 'spree_mail_settings_nx'
 
 group :test, :development do
   gem 'bullet'
@@ -105,14 +145,24 @@ RUBY
 
 bundle install --gemfile Gemfile
 bundle exec rails db:drop || true
+echo "#================================"
+echo "# bundle exec rails db:create"
+echo "#================================"
 bundle exec rails db:create
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true --copy_storefront=false
 bundle exec rails g spree:mailers_preview
 bundle exec rails g spree:auth:install
 bundle exec rails g spree_gateway:install
+# bundle exec rails g spree_braintree_vzero:install
+bundle exec rails g spree_paypal_express:install
 
 if [ "$SPREE_HEADLESS" == "" ]; then
   bundle exec rails g spree_related_products:install
   bundle exec rails g spree_static_content:install
-  bundle exec rails g spree_multi_domain:install
+  # bundle exec rails g spree_multi_domain:install
+  # Applied at this point for the problem reported at the following URL:
+  # https://github.com/spree-contrib/spree_mail_settings/issues/55
+  # cat <<RUBY >> Gemfile
+  # gem 'spree_mail_settings', git: 'spree_mail_settings/spree_mail_settings', branch: 'spree_mail_settings_nx'
+#RUBY
 fi
