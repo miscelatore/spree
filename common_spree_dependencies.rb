@@ -15,7 +15,8 @@ platforms :jruby do
 end
 
 platforms :ruby do
-  gem 'mysql2'
+  # Not necessary for my implementation
+  # gem 'mysql2'
   gem 'pg', '~> 1.1'
 end
 
