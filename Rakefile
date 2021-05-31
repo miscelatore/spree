@@ -96,3 +96,12 @@ task :sandbox do
     exec("bin/sandbox.sh")
   end
 end
+
+desc "Creates a sandbox application for simulating the Spree code in a deployed VPS Rails app"
+task :sandbox_gem_from_github do
+  Bundler.with_clean_env do
+    exec("bin/sandbox_gem_from_github.sh")
+  end
+end
+
+
