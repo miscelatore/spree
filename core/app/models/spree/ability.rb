@@ -58,6 +58,7 @@ module Spree
     def apply_admin_permissions(user)
       can :manage, :all
       cannot [:create, :destroy], ::Spree::Store
+      cannot [:destroy], ::Spree.user_class
     end
 
     def apply_user_permissions(user)
@@ -77,7 +78,8 @@ module Spree
       can :read, ::Spree::ProductProperty
       can :read, ::Spree::Property
       can :create, ::Spree.user_class
-      can [:show, :update, :destroy], ::Spree.user_class, id: user.id
+      can [:show, :update], ::Spree.user_class, id: user.id
+      cannot [:destroy], ::Spree.user_class
       can :read, ::Spree::State
       can :read, ::Spree::Store
       can :read, ::Spree::Taxon
@@ -85,9 +87,10 @@ module Spree
       can :read, ::Spree::Variant
       can :read, ::Spree::Zone
     end
-
+    
     def protect_admin_role
       cannot [:update, :destroy], ::Spree::Role, name: ['admin']
+      cannot [:update, :destroy], ::Spree::Role, name: ['user']
     end
   end
 end
