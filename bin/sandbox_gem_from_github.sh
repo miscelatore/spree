@@ -112,28 +112,28 @@ cat <<RUBY >> config/environments/development.rb
 Rails.application.config.hosts << /.*\.lvh\.me/
 RUBY
 
-bundle install --gemfile Gemfile
-bundle exec rails db:drop || true
+RAILS_ENV=production bundle install --gemfile Gemfile
+RAILS_ENV=production bundle exec rails db:drop || true
 echo "#==========================================="
 echo "# bundle exec rails db:create               "
 echo "#==========================================="
-bundle exec rails db:create
+RAILS_ENV=production bundle exec rails db:create
 echo "#==========================================="
 echo "# bundle exec rails g spree:install ...     "
 echo "#==========================================="
-bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true --copy_storefront=false
+RAILS_ENV=production bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true --copy_storefront=false
 echo "#==========================================="
 echo "# bundle exec rails g spree:mailers_preview "
 echo "#==========================================="
-bundle exec rails g spree:mailers_preview
-bundle exec rails g spree:auth:install
-bundle exec rails g spree_gateway:install
-bundle exec rails g spree_paypal_express:install
+RAILS_ENV=production bundle exec rails g spree:mailers_preview
+RAILS_ENV=production bundle exec rails g spree:auth:install
+RAILS_ENV=production bundle exec rails g spree_gateway:install
+RAILS_ENV=production bundle exec rails g spree_paypal_express:install
 
 if [ "$SPREE_HEADLESS" == "" ]; then
-  bundle exec rails g spree_related_products:install
-  bundle exec rails g spree_static_content:install
-  # bundle exec rails g spree_multi_domain:install
+  RAILS_ENV=production bundle exec rails g spree_related_products:install
+  RAILS_ENV=production bundle exec rails g spree_static_content:install
+  # RAILS_ENV=production bundle exec rails g spree_multi_domain:install
   # Applied at this point for the problem reported at the following URL:
   # https://github.com/spree-contrib/spree_mail_settings/issues/55
   # cat <<RUBY >> Gemfile
