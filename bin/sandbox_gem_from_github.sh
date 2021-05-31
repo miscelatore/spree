@@ -68,7 +68,7 @@ $SPREE_AUTH_DEVISE_GEM
 $SPREE_GATEWAY_GEM
 $BETTER_SPREE_PAYPAL_EXPRESS
 
-gem 'spree_i18n', github: 'miscelatore/spree_i18n', branch: 'spree_i18n_nx'
+# gem 'spree_i18n', github: 'miscelatore/spree_i18n', branch: 'spree_i18n_nx'
 
 group :test, :development do
   gem 'bullet'
@@ -80,7 +80,7 @@ gem 'rack-cache'
 RUBY
 else
 cat <<RUBY >> Gemfile
-gem 'spree', github: 'miscelatore/spree_i18n', branch: 'spree_nx'
+gem 'spree', github: 'miscelatore/spree', branch: 'spree_nx'
 $SPREE_AUTH_DEVISE_GEM
 $SPREE_GATEWAY_GEM
 $BETTER_SPREE_PAYPAL_EXPRESS
