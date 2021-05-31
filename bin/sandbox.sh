@@ -145,11 +145,17 @@ RUBY
 
 bundle install --gemfile Gemfile
 bundle exec rails db:drop || true
-echo "#================================"
-echo "# bundle exec rails db:create"
-echo "#================================"
+echo "#==========================================="
+echo "# bundle exec rails db:create               "
+echo "#==========================================="
 bundle exec rails db:create
+echo "#==========================================="
+echo "# bundle exec rails g spree:install ...     "
+echo "#==========================================="
 bundle exec rails g spree:install --auto-accept --user_class=Spree::User --enforce_available_locales=true --copy_storefront=false
+echo "#==========================================="
+echo "# bundle exec rails g spree:mailers_preview "
+echo "#==========================================="
 bundle exec rails g spree:mailers_preview
 bundle exec rails g spree:auth:install
 bundle exec rails g spree_gateway:install
