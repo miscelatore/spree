@@ -88,7 +88,7 @@ $SPREE_AUTH_DEVISE_GEM
 $SPREE_GATEWAY_GEM
 $BETTER_SPREE_PAYPAL_EXPRESS
 
-# gem 'spree_i18n', git: 'spree_i18n/spree_i18n', branch: 'spree_i18n_nx'
+gem 'spree_i18n', git: 'spree_i18n/spree_i18n', branch: 'spree_i18n_nx'
 
 group :test, :development do
   gem 'bullet'
