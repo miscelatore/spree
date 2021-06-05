@@ -1,4 +1,4 @@
-#!/bin/sh
+#!/usr/bin/env bash
 # Used in the sandbox rake task in Rakefile
 
 set -e
@@ -19,8 +19,15 @@ sqlite|'')
   ;;
 esac
 
-rm -rf ./sandbox
-bundle exec rails new sandbox --database="$RAILSDB" \
+if [ "$APP_NAME" == "" ]; then
+  echo "You must specify APP_NAME!"
+  exit 1
+else
+  APP_NAME=$(sed "s/[^a-zA-Z0-9']/_/g" <<< $APP_NAME)
+fi
+
+rm -rf ./$APP_NAME
+bundle exec rails new $APP_NAME --database="$RAILSDB" \
   --skip-bundle \
   --skip-git \
   --skip-keeps \
@@ -31,12 +38,12 @@ bundle exec rails new sandbox --database="$RAILSDB" \
   --skip-javascript \
   --skip-bootsnap
 
-if [ ! -d "sandbox" ]; then
-  echo 'sandbox rails application failed'
+if [ ! -d "$APP_NAME" ]; then
+  echo "$APP_NAME rails application failed"
   exit 1
 fi
 
-cd ./sandbox
+cd ./$APP_NAME
 
 if [ "$SPREE_AUTH_DEVISE_PATH" != "" ]; then
   SPREE_AUTH_DEVISE_GEM="gem 'spree_auth_devise', path: '$SPREE_AUTH_DEVISE_PATH'"
@@ -112,6 +119,10 @@ cat <<RUBY >> config/environments/development.rb
 Rails.application.config.hosts << /.*\.lvh\.me/
 RUBY
 
+/bin/sed -r -i "s/password:\s.+/password: <%= ENV\['PSQL_DATABASE_PASSWORD'\] %>/" ./config/database.yml
+/bin/sed -r -i 's/username:\s.+/username: postgres\n  host: localhost/' ./config/database.yml
+
+
 RAILS_ENV=production bundle install --gemfile Gemfile
 RAILS_ENV=production bundle exec rails db:drop || true
 echo "#==========================================="
@@ -140,3 +151,5 @@ if [ "$SPREE_HEADLESS" == "" ]; then
   # gem 'spree_mail_settings', github: 'miscelatore/spree_mail_settings', branch: 'spree_mail_settings_nx'
 #RUBY
 fi
+
+RAILS_ENV=production bundle exec rake assets:precompile
