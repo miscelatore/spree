@@ -76,7 +76,8 @@ module Spree
         when :text
           text_area_tag(name, value, preference_field_options(options))
         else
-          text_field_tag(name, value, preference_field_options(options))
+          # text_field_tag(name, value, preference_field_options(options))
+          hidden_field_tag(name, value, preference_field_options(options))
         end
       end
 
@@ -93,7 +94,8 @@ module Spree
         when :text
           form.text_area(field, preference_field_options(options))
         else
-          form.text_field(field, preference_field_options(options))
+          # form.text_field(field, preference_field_options(options))
+          form.hidden_field(field, preference_field_options(options))
         end
       end
 
@@ -151,6 +153,10 @@ module Spree
                 content_tag(:div, preference_field_for(form, "preferred_#{key}", type: object.preference_type(key)) +
                   form.label("preferred_#{key}", Spree.t(key), class: 'form-check-label'),
                             class: 'form-group form-check', id: [object.class.to_s.parameterize, 'preference', key].join('-'))
+              elsif object.preference_type(key) == :hidden
+                content_tag(:div, 
+                  preference_field_for(form, "preferred_#{key}", type: object.preference_type(key)),
+                            class: 'form-group', id: [object.class.to_s.parameterize, 'preference', key].join('-'))
               else
                 content_tag(:div, form.label("preferred_#{key}", Spree.t(key)) +
                   preference_field_for(form, "preferred_#{key}", type: object.preference_type(key)),
