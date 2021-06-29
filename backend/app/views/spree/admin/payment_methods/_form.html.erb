@@ -10,7 +10,7 @@
         <div class="card-body">
           <div class="form-group">
             <%= f.label :type, Spree.t(:provider) %>
-            <%= collection_select(:payment_method, :type, @providers, :to_s, :name, {}, {id: 'gtwy-type', class: 'select2'}) %>
+            <%= collection_select(:payment_method, :type, @providers, :to_s, ->(name) { I18n.t(name, scope: :gateway) }, {}, {id: 'gtwy-type', class: 'select2'}) %>
           </div>
           <hr class="my-4">
           <%= field_container :payment_method, :name, class: ['form-group'], 'data-hook' => 'name' do %>
