@@ -23,6 +23,12 @@ jQuery(function ($) {
     $('.filter-well').slideToggle()
     $(this).parents('.filter-wrap').toggleClass('collapsed')
   })
+  
+  $('.js-show-optional-parameters').click(function () {
+    $('.optional-parameters-well').slideToggle()
+    $(this).parents('.optional-parameters-wrap').toggleClass('collapsed')
+  })
+  
 
   // Responsive Menus
   var body  = $('body')

@@ -9,3 +9,24 @@ table#product_properties {
     min-width: 180px;
   }
 }
+
+.index-optional-parameters-button {
+  font-size: $font-size-sm;
+
+  button {
+    height: 100%;
+    text-transform: uppercase;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: $small-font-size;
+    border-color: $input-border-color;
+    //border-right: none;
+    //border-top-right-radius: 0;
+    //border-bottom-right-radius: 0;
+    background-color: $white;
+
+    &:hover, &:focus {
+      background-color: $gray-100;
+    }
+  }
+}
