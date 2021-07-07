@@ -94,7 +94,8 @@ module Spree
     after_save :reset_memoized_data
     after_commit :reset_memoized_data
 
-    before_validation :normalize_slug, on: :update
+    before_validation :normalize_slug
+    # , on: :update
     before_validation :validate_master
 
     with_options length: { maximum: 255 }, allow_blank: true do
@@ -369,7 +370,10 @@ module Spree
     end
 
     def normalize_slug
-      self.slug = normalize_friendly_id(slug)
+      logger.debug("*** Inside normalize_slug ***")
+      logger.debug("#{name}")
+      self.slug = normalize_friendly_id(name)
+      logger.debug("#{self.slug}")
     end
 
     def punch_slug
