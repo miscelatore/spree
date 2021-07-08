@@ -10,7 +10,11 @@ table#product_properties {
   }
 }
 
-.index-optional-parameters-button {
+.index-optional-parameters-button, 
+.index-cost-price-button, 
+.index-available-on-button, 
+.index-seo-parameters-button, 
+.index-product-attributes-button {
   font-size: $font-size-sm;
 
   button {

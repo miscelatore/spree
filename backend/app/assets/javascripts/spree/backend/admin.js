@@ -29,6 +29,26 @@ jQuery(function ($) {
     $(this).parents('.optional-parameters-wrap').toggleClass('collapsed')
   })
   
+  $('.js-show-cost-price').click(function () {
+    $('.cost-price-well').slideToggle()
+    $(this).parents('.cost-price-wrap').toggleClass('collapsed')
+  })
+  
+  $('.js-show-available-on').click(function () {
+    $('.available-on-well').slideToggle()
+    $(this).parents('.available-on-wrap').toggleClass('collapsed')
+  })
+  
+  $('.js-show-seo-parameters').click(function () {
+    $('.seo-parameters-well').slideToggle()
+    $(this).parents('.seo-parameters-wrap').toggleClass('collapsed')
+  })
+  
+  $('.js-show-product-attributes').click(function () {
+    $('.product-attributes-well').slideToggle()
+    $(this).parents('.product-attributes-wrap').toggleClass('collapsed')
+  })
+  
 
   // Responsive Menus
   var body  = $('body')
